@@ -1,62 +1,45 @@
-Solenne AI — Proprietary Software License
+# Solenne AI — Personal & Closed-Source License
+
 Copyright (c) 2026 Stamir36. All rights reserved.
 
-This repository and the Solenne AI application ("the Software") are proprietary.
-They are not open source. No permission is granted to use, copy, modify or
-distribute the source code of the application, because the source code is not
-published at all.
+Solenne AI is a personal, closed-source project. It is not open source. 
+You are free to download and use the compiled application for personal enjoyment, 
+but the source code, custom assets, and builds remain my intellectual property.
 
-1. PERMITTED USE
+## 1. WHAT YOU CAN DO (Permitted Use)
 
-   You may download and run the official builds of the Software for personal,
-   non-commercial use on your own devices. You may share a link to this
-   repository and to the official release page.
+* **Play and Use:** You may download, install, and run the official builds of Solenne AI for personal, non-commercial entertainment on your own devices.
+* **Share Links:** You may share links to this official repository, the release page, or official download archives with friends or on forums.
+* **Share Presets:** You may create, share, and distribute your own custom text-based character presets (JSON files) and non-proprietary configurations.
 
-2. RESTRICTIONS
+## 2. WHAT YOU CANNOT DO (Restrictions)
 
-   Unless you have prior written permission from the copyright holder, you may
-   not:
+Unless you have my explicit written permission, you may not:
 
-   a) copy, publish, mirror, sublicense, rent, sell or otherwise distribute the
-      Software or any part of it, including modified builds;
-   b) decompile, disassemble, reverse engineer or otherwise attempt to derive
-      the source code, internal data formats or encryption keys of the Software;
-   c) extract, decrypt, repack or redistribute bundled assets, including 3D
-      character models, voices, previews and the encrypted model container;
-   d) remove, obscure or alter any copyright, trademark or attribution notice;
-   e) present the Software, or a derivative of it, as your own product or as
-      the work of anyone other than Stamir36;
-   f) use the name "Solenne AI", its logo or its screenshots to imply
-      endorsement or affiliation without permission.
+* **No Reuploading:** Reupload the compiled binaries, installers, or the portable `Solenne Build` folders to third-party file hosts, torrent trackers, or other repositories.
+* **No Source Code Theft:** Decompile, reverse engineer, or attempt to extract the source code from the compiled `companion.exe` binaries.
+* **No Asset Stealing:** Unpack, decrypt, or extract the bundled encrypted 3D models (`.vrm.pack`), textures, or custom assets to use in other projects or redistribute them.
+* **No Commercial Use:** Sell the app, bundle it with paid software, put it behind a paywall, or use it for any commercial purposes.
+* **No Impersonation:** Claim you made Solenne AI, or remove/obscure my name and credits from the application and its interface.
 
-3. THIRD-PARTY CONTENT
+## 3. THIRD-PARTY ASSETS & LIBRARIES
 
-   Bundled 3D characters, voices and other third-party assets remain the
-   property of their respective authors and are licensed to the project, not to
-   you. They are not included in this repository. Screenshots in this repository
-   show such characters and are provided for documentation purposes only.
+Solenne AI relies on several third-party libraries and assets that have their own licenses. I do not claim ownership of them, and by using the app, you agree to respect their original creators:
 
-   The website files in this repository (index.html, styles.css, app.js,
-   assets/icon.png and screenshots/) are published so that the project page can
-   be hosted; no license is granted to reuse them as a template for another
-   product.
+* **3D Animations:** Body animations are sourced from the **VRoid Project** (pixiv Inc.) and **Mixamo** (Adobe). They are licensed for use within this application and cannot be extracted or redistributed.
+* **Voice Models:** Local voice synthesis uses **Silero** models (licensed under CC BY-NC-SA 4.0) and **Edge TTS** (Microsoft). 
+* **AI & Speech:** Whisper (speech-to-text) and local LLM integrations are the property of their respective creators.
+* **Repository Assets:** Screenshots, documentation, and UI files in this repository are provided for viewing and hosting purposes only; no license is granted to rip them as a template for another product.
 
-4. NO WARRANTY
+## 4. NO WARRANTY (Indie Dev Disclaimer)
 
-   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-   AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM, OUT
-   OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OF THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. 
+I am a solo developer sharing this project in my free time. I am not responsible for any bugs, crashes, data loss, or issues that might occur on your device while using the app. Use it at your own risk.
 
-5. TERMINATION
+## 5. TERMINATION
 
-   Any breach of these terms terminates your permission to use the Software.
-   On termination you must delete all copies in your possession, except that you
-   may keep the personal data the application created for you.
+If you break these rules (e.g., reuploading the game, stealing assets, or attempting to crack the model encryption), your right to use the software is immediately revoked, and you must delete all copies from your devices. Your personal local data (chats, diaries, settings) remains yours.
 
-6. CONTACT
+## 6. CONTACT
 
-   For licensing, partnership or permission requests, contact Stamir36
-   through the repository's issue tracker or the contact address published on
-   the project page.
+If you want to report a bug, suggest a feature, or just say hi, please open an issue on the repository or reach out via the contact info on the project page.
