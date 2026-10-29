@@ -1,0 +1,747 @@
+<!doctype html>
+<!-- Solenne AI — product page.
+
+     Style follows the application window, not a landing page: one near-black
+     plum background, one violet accent, hairline separators instead of cards
+     with gradients. Every section is a row of the same rhythm, so the page
+     reads as a document about the app rather than a sales sheet.
+
+     Text lives in leaf elements with data-ru/data-en: app.js swaps textContent,
+     so a wrapper with children must never carry the attributes itself. -->
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Solenne AI — 3D-компаньон для рабочего стола</title>
+    <meta
+      name="description"
+      content="Solenne AI — 3D-компаньон на VRM: помнит мелочи, имеет настроение, живёт между сессиями и ведёт трансляцию вместе с вами. Локальные модель и голос."
+    />
+    <meta name="theme-color" content="#0b0910" />
+    <meta property="og:title" content="Solenne AI — 3D desktop companion" />
+    <meta
+      property="og:description"
+      content="A VRM companion who remembers small things, has moods of her own, and co-hosts your stream. Local-first: your model, your voice, your machine."
+    />
+    <meta property="og:image" content="screenshots/main-page.webp" />
+    <script>
+      /* Язык выбирается до первой отрисовки: сохранённый выбор, иначе язык
+         браузера. Разметка по умолчанию русская, поэтому для английского
+         страница придерживается до подстановки текста (см. styles.css). */
+      (function () {
+        var lang = null;
+        try {
+          lang = localStorage.getItem("solenne-lang");
+        } catch (e) {
+          /* приватный режим может запретить хранилище */
+        }
+        if (lang !== "ru" && lang !== "en") {
+          var list =
+            navigator.languages && navigator.languages.length
+              ? navigator.languages
+              : [navigator.language || ""];
+          lang = null;
+          for (var i = 0; i < list.length && !lang; i += 1) {
+            var code = String(list[i]).toLowerCase();
+            if (code.indexOf("ru") === 0) lang = "ru";
+            else if (code.indexOf("en") === 0) lang = "en";
+          }
+          lang = lang || "ru";
+        }
+        document.documentElement.lang = lang;
+        if (lang === "en") document.documentElement.setAttribute("data-boot", "");
+      })();
+    </script>
+    <link rel="icon" href="assets/icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="home">
+    <header class="nav">
+      <div class="wrap nav-inner">
+        <a class="brand" href="#top">
+          <img src="assets/icon.png" alt="" width="26" height="26" />
+          <span>SOLENNE<em>AI</em></span>
+        </a>
+        <nav class="nav-links">
+          <a href="#alive" data-ru="Почему живая" data-en="Why it feels alive">Почему живая</a>
+          <a href="#features" data-ru="Возможности" data-en="Features">Возможности</a>
+          <a href="#gallery" data-ru="Скриншоты" data-en="Screenshots">Скриншоты</a>
+          <a href="#faq" data-ru="Вопросы" data-en="FAQ">Вопросы</a>
+          <a href="help.html" data-ru="Помощь" data-en="Help">Помощь</a>
+        </nav>
+        <div class="nav-actions">
+          <button class="lang" id="lang" type="button" aria-label="Switch language">
+            <span data-lang="ru">RU</span><i></i><span data-lang="en">EN</span>
+          </button>
+          <a
+            class="btn btn-ghost"
+            id="repo-link"
+            href="https://github.com/Stamir36/solenne-ai"
+            target="_blank"
+            rel="noreferrer"
+            data-ru="GitHub"
+            data-en="GitHub"
+            >GitHub</a
+          >
+          <a class="btn btn-solid" href="#download" data-ru="Скачать" data-en="Download">Скачать</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="wrap">
+          <p class="eyebrow">
+            <span data-ru="Windows · VRM 0.x / 1.0 · локальная модель" data-en="Windows · VRM 0.x / 1.0 · local model"
+              >Windows · VRM 0.x / 1.0 · локальная модель</span
+            >
+          </p>
+          <h1>
+            <span data-ru="Она живёт рядом," data-en="A companion who lives">Она живёт рядом,</span>
+            <span class="accent" data-ru="а не в чате" data-en="next to you">а не в чате</span>
+          </h1>
+          <p class="lede">
+            <span
+              data-ru="3D-компаньон на VRM: помнит мелочи и сама о них спрашивает, бывает не в духе, живёт между сессиями и ведёт трансляцию вместе с вами. Модель и голос — на вашей машине."
+              data-en="A VRM companion who remembers the small things and asks about them days later, has moods of her own, keeps living between sessions, and co-hosts your stream. Your model, your voice, your machine."
+              >3D-компаньон на VRM: помнит мелочи и сама о них спрашивает, бывает не в духе, живёт между
+              сессиями и ведёт трансляцию вместе с вами. Модель и голос — на вашей машине.</span
+            >
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-solid" href="#download" data-ru="Скачать сборку" data-en="Download build"
+              >Скачать сборку</a
+            >
+            <a class="btn btn-ghost" href="#features" data-ru="Что умеет" data-en="What she can do"
+              >Что умеет</a
+            >
+          </div>
+
+          <figure class="frame hero-shot">
+            <img src="screenshots/main-page.webp" alt="Solenne AI — главное окно" loading="eager" />
+          </figure>
+
+          <ul class="metrics">
+            <li>
+              <b>6</b>
+              <span data-ru="встроенных персонажей" data-en="built-in characters">встроенных персонажей</span>
+            </li>
+            <li>
+              <b>0</b>
+              <span data-ru="аккаунтов и подписок" data-en="accounts and subscriptions">аккаунтов и подписок</span>
+            </li>
+            <li>
+              <b>3</b>
+              <span data-ru="слоя памяти" data-en="memory layers">слоя памяти</span>
+            </li>
+            <li>
+              <b>2</b>
+              <span data-ru="режима эфира" data-en="stream modes">режима эфира</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="alive">
+        <div class="wrap">
+          <header class="head">
+            <h2 data-ru="Почему она ощущается живой" data-en="Why she feels alive">Почему она ощущается живой</h2>
+            <p
+              data-ru="Три вещи, которых не даёт ни один «чат с аватаром»: память о мелочах, собственное состояние и жизнь без вас."
+              data-en="Three things a chat window with a 3D skin can never give you: memory of small things, a state of her own, and a life when you are not there."
+            >
+              Три вещи, которых не даёт ни один «чат с аватаром»: память о мелочах, собственное
+              состояние и жизнь без вас.
+            </p>
+          </header>
+          <div class="pillars">
+            <article>
+              <span class="num">01</span>
+              <h3 data-ru="Помнит мелочи" data-en="Remembers the small things">Помнит мелочи</h3>
+              <p
+                data-ru="Что вы ели на завтрак, на что жаловались вчера, что обещали принести. Через пару дней она сама спросит — потому что это отдельно записано, а не потерялось в истории."
+                data-en="What you had for breakfast, what you complained about yesterday, what you promised to bring. Days later she asks on her own — because it was written down separately, not lost in the log."
+              >
+                Что вы ели на завтрак, на что жаловались вчера, что обещали принести. Через пару дней
+                она сама спросит — потому что это отдельно записано, а не потерялось в истории.
+              </p>
+            </article>
+            <article>
+              <span class="num">02</span>
+              <h3 data-ru="Настроение и каприз" data-en="Mood and caprice">Настроение и каприз</h3>
+              <p
+                data-ru="Близость и настроение — разные вещи и влияют на разговор по-разному. У дня есть каприз: она может обидеться, замолчать или стать слишком ласковой без всякой причины."
+                data-en="Closeness and mood are different things and change the conversation differently. Every day has a caprice: she may take offence, go quiet, or be far too affectionate for no reason at all."
+              >
+                Близость и настроение — разные вещи и влияют на разговор по-разному. У дня есть каприз:
+                она может обидеться, замолчать или стать слишком ласковой без всякой причины.
+              </p>
+            </article>
+            <article>
+              <span class="num">03</span>
+              <h3 data-ru="Живёт без вас" data-en="Lives without you">Живёт без вас</h3>
+              <p
+                data-ru="Вернулись через день — у неё есть история: находка, мысль у окна, план на завтра. Планы, дневник и события собраны в одну ленту, а не в три разных окна."
+                data-en="Come back a day later and she has a story: something she found, a thought by the window, a plan for tomorrow. Plans, diary and events arrive as one feed, not three separate screens."
+              >
+                Вернулись через день — у неё есть история: находка, мысль у окна, план на завтра.
+                Планы, дневник и события собраны в одну ленту, а не в три разных окна.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="features">
+        <div class="wrap">
+          <header class="head">
+            <h2 data-ru="Что умеет" data-en="What she can do">Что умеет</h2>
+            <p
+              data-ru="Одно окно, один персонаж и всё остальное — вокруг него."
+              data-en="One window, one character, and everything else built around her."
+            >
+              Одно окно, один персонаж и всё остальное — вокруг него.
+            </p>
+          </header>
+          <div class="items">
+            <article>
+              <h3 data-ru="Полная 3D-сцена" data-en="A real 3D scene">Полная 3D-сцена</h3>
+              <p
+                data-ru="VRM 0.x / 1.0, физика, моргание, взгляд, жесты. Эмоции и позы — часть ответа, а не украшение."
+                data-en="VRM 0.x / 1.0, physics, blinking, gaze, gestures. Emotions and poses are part of the answer, not decoration."
+              >
+                VRM 0.x / 1.0, физика, моргание, взгляд, жесты. Эмоции и позы — часть ответа, а не
+                украшение.
+              </p>
+            </article>
+            <article>
+              <h3 data-ru="Одежда — настоящие меши" data-en="Clothing is real mesh">Одежда — настоящие меши</h3>
+              <p
+                data-ru="Куртка, верх, низ, колготки, обувь, хвост. Слои скрываются по-настоящему, и она сама может переодеться, если это уместно."
+                data-en="Jacket, top, bottom, tights, shoes, tail. Layers actually hide, and she can change on her own when it fits the moment."
+              >
+                Куртка, верх, низ, колготки, обувь, хвост. Слои скрываются по-настоящему, и она сама
+                может переодеться, если это уместно.
+              </p>
+            </article>
+            <article>
+              <h3 data-ru="Любая модель" data-en="Any model">Любая модель</h3>
+              <p
+                data-ru="LM Studio, Ollama, Groq, NVIDIA или свой туннель. Промпт подстраивается под окно контекста, история не обрезается вслепую."
+                data-en="LM Studio, Ollama, Groq, NVIDIA or your own tunnel. The prompt adapts to the context window; history is trimmed with a budget, not blindly."
+              >
+                LM Studio, Ollama, Groq, NVIDIA или свой туннель. Промпт подстраивается под окно
+                контекста, история не обрезается вслепую.
+              </p>
+            </article>
+            <article>
+              <h3 data-ru="Голос, который не уходит в сеть" data-en="A voice that stays home">
+                Голос, который не уходит в сеть
+              </h3>
+              <p
+                data-ru="Silero локально (RU/EN), Edge TTS, Fish Audio, ElevenLabs или свой сервер. Липсинк считается по реальному аудио."
+                data-en="Silero locally (RU/EN), Edge TTS, Fish Audio, ElevenLabs or your own server. Lip-sync is computed from the real audio."
+              >
+                Silero локально (RU/EN), Edge TTS, Fish Audio, ElevenLabs или свой сервер. Липсинк
+                считается по реальному аудио.
+              </p>
+            </article>
+            <article>
+              <h3 data-ru="Слышит ваш голос" data-en="Hears your voice">Слышит ваш голос</h3>
+              <p
+                data-ru="Whisper small локально, без браузерных пузырей. Удержание кнопки или Alt в любом приложении — и текст уже в поле ввода."
+                data-en="Whisper small runs locally, no browser prompts. Hold the button or Alt anywhere in Windows and the text lands in the composer."
+              >
+                Whisper small локально, без браузерных пузырей. Удержание кнопки или Alt в любом
+                приложении — и текст уже в поле ввода.
+              </p>
+            </article>
+            <article>
+              <h3 data-ru="Видит экран и камеру" data-en="Sees your screen and camera">Видит экран и камеру</h3>
+              <p
+                data-ru="Снимок по просьбе, совместный просмотр окна, живая камера. По умолчанию выключено, кадры не сохраняются."
+                data-en="A screenshot on request, watch-together over a window, a live webcam glance. Off by default; frames are never stored."
+              >
+                Снимок по просьбе, совместный просмотр окна, живая камера. По умолчанию выключено,
+                кадры не сохраняются.
+              </p>
+            </article>
+            <article>
+              <h3 data-ru="Трансляция вдвоём" data-en="Streaming as a duo">Трансляция вдвоём</h3>
+              <p
+                data-ru="Twitch, YouTube, TikTok. Два режима: она ведёт эфир сама или соведущая — видит экран, слышит микрофон и советуется с вами."
+                data-en="Twitch, YouTube, TikTok. Two modes: she runs the show alone, or co-hosts — seeing your screen, hearing your mic and checking with you."
+              >
+                Twitch, YouTube, TikTok. Два режима: она ведёт эфир сама или соведущая — видит экран,
+                слышит микрофон и советуется с вами.
+              </p>
+            </article>
+            <article>
+              <h3 data-ru="Звонок втроём" data-en="A call for three">Звонок втроём</h3>
+              <p
+                data-ru="Вторая героиня на линии: своя карточка, память, голос и собственное отношение к первой — вплоть до ревности."
+                data-en="A second character on the line: her own card, memory, voice and her own opinion about the first — jealousy included."
+              >
+                Вторая героиня на линии: своя карточка, память, голос и собственное отношение к первой —
+                вплоть до ревности.
+              </p>
+            </article>
+            <article>
+              <h3 data-ru="Minecraft" data-en="Minecraft">Minecraft</h3>
+              <p
+                data-ru="Заходит на сервер ботом и выполняет выбранное дело, пока разговаривает с вами. Под локальные модели, которые думают медленно."
+                data-en="Joins a server as a bot and carries out one chosen task while talking to you. Built for local models that think slowly."
+              >
+                Заходит на сервер ботом и выполняет выбранное дело, пока разговаривает с вами. Под
+                локальные модели, которые думают медленно.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="gallery">
+        <div class="wrap">
+          <header class="head">
+            <h2 data-ru="Как это выглядит" data-en="How it looks">Как это выглядит</h2>
+            <p
+              data-ru="Кадры из настоящего окна приложения."
+              data-en="Frames from the real application window."
+            >
+              Кадры из настоящего окна приложения.
+            </p>
+          </header>
+          <div class="gallery">
+            <figure class="shot wide">
+              <img src="screenshots/main-page.webp" alt="Главное окно Solenne AI" loading="lazy" />
+              <figcaption>
+                <b data-ru="Главное окно" data-en="The main window">Главное окно</b>
+                <span
+                  data-ru="Сцена, диалог и поле ввода — без панелей по краям"
+                  data-en="Scene, dialogue and composer — no panels around the edges"
+                  >Сцена, диалог и поле ввода — без панелей по краям</span
+                >
+              </figcaption>
+            </figure>
+            <figure class="shot">
+              <img src="screenshots/companion.webp" alt="Режим компаньона" loading="lazy" />
+              <figcaption>
+                <b data-ru="Режим компаньона" data-en="Companion mode">Режим компаньона</b>
+                <span
+                  data-ru="Портрет поверх рабочего стола, пустые края пропускают клики"
+                  data-en="A portrait over your desktop; empty areas pass clicks through"
+                  >Портрет поверх рабочего стола, пустые края пропускают клики</span
+                >
+              </figcaption>
+            </figure>
+            <figure class="shot">
+              <img src="screenshots/voice-mode.webp" alt="Голосовой режим" loading="lazy" />
+              <figcaption>
+                <b data-ru="Голосовой режим" data-en="Voice mode">Голосовой режим</b>
+                <span
+                  data-ru="Говорите — она слушает и отвечает вслух"
+                  data-en="Speak — she listens and answers out loud"
+                  >Говорите — она слушает и отвечает вслух</span
+                >
+              </figcaption>
+            </figure>
+            <figure class="shot">
+              <img src="screenshots/status.webp" alt="Панель «Она рядом»" loading="lazy" />
+              <figcaption>
+                <b data-ru="Она рядом" data-en="She is right here">Она рядом</b>
+                <span
+                  data-ru="Близость, настроение, память и дневник"
+                  data-en="Closeness, mood, memory and the diary"
+                  >Близость, настроение, память и дневник</span
+                >
+              </figcaption>
+            </figure>
+            <figure class="shot">
+              <img src="screenshots/models.webp" alt="Выбор персонажа" loading="lazy" />
+              <figcaption>
+                <b data-ru="Модели и костюмы" data-en="Models and costumes">Модели и костюмы</b>
+                <span
+                  data-ru="Встроенные персонажи и своя VRM со слоями одежды"
+                  data-en="Built-in characters, or your own VRM with outfit layers"
+                  >Встроенные персонажи и своя VRM со слоями одежды</span
+                >
+              </figcaption>
+            </figure>
+            <figure class="shot">
+              <img src="screenshots/provider.webp" alt="Подключение модели" loading="lazy" />
+              <figcaption>
+                <b data-ru="Любая модель" data-en="Any model">Любая модель</b>
+                <span
+                  data-ru="LM Studio, Ollama, Groq, NVIDIA или свой адрес"
+                  data-en="LM Studio, Ollama, Groq, NVIDIA or your own endpoint"
+                  >LM Studio, Ollama, Groq, NVIDIA или свой адрес</span
+                >
+              </figcaption>
+            </figure>
+            <figure class="shot">
+              <img src="screenshots/speech-providers.webp" alt="Провайдеры речи" loading="lazy" />
+              <figcaption>
+                <b data-ru="Голос на выбор" data-en="A voice of your choice">Голос на выбор</b>
+                <span
+                  data-ru="Silero локально, Edge, Fish Audio, ElevenLabs — и свой эндпоинт"
+                  data-en="Silero on-device, Edge, Fish Audio, ElevenLabs — or your own endpoint"
+                  >Silero локально, Edge, Fish Audio, ElevenLabs — и свой эндпоинт</span
+                >
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="compare">
+        <div class="wrap">
+          <header class="head">
+            <h2 data-ru="Честное сравнение" data-en="An honest comparison">Честное сравнение</h2>
+            <p
+              data-ru="По публичной документации на октябрь 2026. «Не найдено» значит «не подтверждено в документации», а не «не существует»."
+              data-en="Based on public documentation, October 2026. “Not found” means “not confirmed in the docs”, not “does not exist”."
+            >
+              По публичной документации на октябрь 2026. «Не найдено» значит «не подтверждено в
+              документации», а не «не существует».
+            </p>
+          </header>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th class="me">Solenne AI</th>
+                  <th>AIRI</th>
+                  <th>Open-LLM-VTuber</th>
+                  <th>Amica</th>
+                  <th>Warudo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th data-ru="Тип" data-en="Type">Тип</th>
+                  <td class="me" data-ru="Компаньон" data-en="Companion">Компаньон</td>
+                  <td data-ru="Платформа" data-en="Platform">Платформа</td>
+                  <td data-ru="Фронтенд VTuber" data-en="VTuber front-end">Фронтенд VTuber</td>
+                  <td data-ru="Компаньон" data-en="Companion">Компаньон</td>
+                  <td data-ru="Студия VTubing" data-en="VTubing studio">Студия VTubing</td>
+                </tr>
+                <tr>
+                  <th data-ru="Десктоп" data-en="Desktop">Десктоп</th>
+                  <td class="me">Windows</td>
+                  <td>Win, macOS, Linux</td>
+                  <td>Win, macOS, Linux</td>
+                  <td>Win, macOS, Linux</td>
+                  <td>Windows</td>
+                </tr>
+                <tr>
+                  <th data-ru="3D-аватар" data-en="3D avatar">3D-аватар</th>
+                  <td class="me">VRM 0.x / 1.0</td>
+                  <td>VRM + Live2D</td>
+                  <td data-ru="Только Live2D" data-en="Live2D only">Только Live2D</td>
+                  <td>VRM</td>
+                  <td>VRM, .warudo</td>
+                </tr>
+                <tr>
+                  <th data-ru="Локальная LLM" data-en="Local LLM">Локальная LLM</th>
+                  <td class="me" data-ru="Да" data-en="Yes">Да</td>
+                  <td data-ru="Да" data-en="Yes">Да</td>
+                  <td data-ru="Да" data-en="Yes">Да</td>
+                  <td data-ru="Да" data-en="Yes">Да</td>
+                  <td data-ru="Нет" data-en="No">Нет</td>
+                </tr>
+                <tr>
+                  <th data-ru="Голос офлайн" data-en="Offline voice">Голос офлайн</th>
+                  <td class="me">Silero</td>
+                  <td>Kokoro</td>
+                  <td data-ru="Много движков" data-en="Many engines">Много движков</td>
+                  <td>Coqui, Kokoro</td>
+                  <td data-ru="Нет" data-en="No">Нет</td>
+                </tr>
+                <tr>
+                  <th data-ru="Долгая память" data-en="Long-term memory">Долгая память</th>
+                  <td class="me" data-ru="Факты, дневник, поиск" data-en="Facts, diary, search">
+                    Факты, дневник, поиск
+                  </td>
+                  <td data-ru="Alaya в работе" data-en="Alaya is WIP">Alaya в работе</td>
+                  <td data-ru="Спорно: Letta" data-en="Disputed: Letta">Спорно: Letta</td>
+                  <td data-ru="Сжатые логи" data-en="Compressed logs">Сжатые логи</td>
+                  <td data-ru="Нет" data-en="No">Нет</td>
+                </tr>
+                <tr>
+                  <th data-ru="Настроение и обида" data-en="Mood and offence">Настроение и обида</th>
+                  <td class="me" data-ru="Да" data-en="Yes">Да</td>
+                  <td data-ru="Только выражения" data-en="Expressions only">Только выражения</td>
+                  <td data-ru="Только выражения" data-en="Expressions only">Только выражения</td>
+                  <td data-ru="Только выражения" data-en="Expressions only">Только выражения</td>
+                  <td data-ru="Только выражения" data-en="Expressions only">Только выражения</td>
+                </tr>
+                <tr>
+                  <th data-ru="Жизнь между сессиями" data-en="Life between sessions">
+                    Жизнь между сессиями
+                  </th>
+                  <td class="me" data-ru="Да" data-en="Yes">Да</td>
+                  <td data-ru="Не найдено" data-en="Not found">Не найдено</td>
+                  <td data-ru="Не найдено" data-en="Not found">Не найдено</td>
+                  <td data-ru="Amica Life (alpha)" data-en="Amica Life (alpha)">Amica Life (alpha)</td>
+                  <td data-ru="Нет" data-en="No">Нет</td>
+                </tr>
+                <tr>
+                  <th data-ru="Экран и камера" data-en="Screen and camera">Экран и камера</th>
+                  <td class="me" data-ru="Да" data-en="Yes">Да</td>
+                  <td data-ru="Захват экрана" data-en="Screen capture">Захват экрана</td>
+                  <td data-ru="Да" data-en="Yes">Да</td>
+                  <td data-ru="Зрение, камера" data-en="Vision, webcam">Зрение, камера</td>
+                  <td data-ru="Трекинг" data-en="Tracking">Трекинг</td>
+                </tr>
+                <tr>
+                  <th data-ru="Чат трансляции" data-en="Stream chat">Чат трансляции</th>
+                  <td class="me">Twitch, YouTube, TikTok</td>
+                  <td data-ru="Не найдено" data-en="Not found">Не найдено</td>
+                  <td>Bilibili</td>
+                  <td data-ru="Не найдено" data-en="Not found">Не найдено</td>
+                  <td>Twitch, YouTube, Bilibili</td>
+                </tr>
+                <tr>
+                  <th data-ru="Две компаньонки в звонке" data-en="Two companions on a call">
+                    Две компаньонки в звонке
+                  </th>
+                  <td class="me" data-ru="Да" data-en="Yes">Да</td>
+                  <td data-ru="Не найдено" data-en="Not found">Не найдено</td>
+                  <td data-ru="Да" data-en="Yes">Да</td>
+                  <td data-ru="Не найдено" data-en="Not found">Не найдено</td>
+                  <td data-ru="Нет" data-en="No">Нет</td>
+                </tr>
+                <tr>
+                  <th data-ru="Лицензия" data-en="License">Лицензия</th>
+                  <td class="me" data-ru="Проприетарная" data-en="Proprietary">Проприетарная</td>
+                  <td>MIT</td>
+                  <td>MIT</td>
+                  <td>MIT</td>
+                  <td data-ru="Бесплатно лично" data-en="Free personal">Бесплатно лично</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="note">
+            <span
+              data-ru="Где сильнее другие: AIRI поддерживает Live2D и macOS и имеет более длинный список провайдеров; у Open-LLM-VTuber больше локальных TTS-движков и есть Linux; Amica работает в браузере; Warudo — глубже как студия VTubing. Solenne AI выбрала другое: один персонаж, одни отношения, одно окно."
+              data-en="Where the others are stronger: AIRI also supports Live2D and macOS and has a longer provider list; Open-LLM-VTuber has more local TTS engines and runs on Linux; Amica works in a browser; Warudo is a deeper VTubing studio. Solenne AI chose a different trade-off: one character, one relationship, one window."
+              >Где сильнее другие: AIRI поддерживает Live2D и macOS и имеет более длинный список провайдеров;
+              у Open-LLM-VTuber больше локальных TTS-движков и есть Linux; Amica работает в браузере;
+              Warudo — глубже как студия VTubing. Solenne AI выбрала другое: один персонаж, одни отношения,
+              одно окно.</span
+            >
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="download">
+        <div class="wrap">
+          <div class="panel">
+            <div>
+              <h2 data-ru="Попробуйте сами" data-en="Try it yourself">Попробуйте сами</h2>
+              <p
+                data-ru="Портативная сборка для Windows: без установщика, без прав администратора, без аккаунта. Модель подключается за минуту — LM Studio или Ollama на этой же машине."
+                data-en="Portable Windows build: no installer, no admin rights, no account. Point it at LM Studio or Ollama on the same machine and you are talking to her in a minute."
+              >
+                Портативная сборка для Windows: без установщика, без прав администратора, без аккаунта.
+                Модель подключается за минуту — LM Studio или Ollama на этой же машине.
+              </p>
+              <p class="req">
+                <span
+                  data-ru="Нужно: Windows 10/11, WebView2, видеокарта желательна; локальный голос ставится один раз."
+                  data-en="Needs Windows 10/11, WebView2, a GPU strongly recommended; the local voice downloads once."
+                  >Нужно: Windows 10/11, WebView2, видеокарта желательна; локальный голос ставится один раз.</span
+                >
+              </p>
+              <p class="req">
+                <a
+                  href="help.html"
+                  data-ru="Не знаете, где взять модель и голос? Инструкция на пять минут."
+                  data-en="Not sure where to get a model and a voice? There is a five-minute guide."
+                  >Не знаете, где взять модель и голос? Инструкция на пять минут.</a
+                >
+              </p>
+            </div>
+            <div class="panel-actions">
+              <a
+                class="btn btn-solid"
+                id="zip-btn"
+                href="https://github.com/Stamir36/solenne-ai/releases/latest/download/Solenne-AI-Portable.zip"
+                target="_blank"
+                rel="noreferrer"
+                data-ru="Скачать .zip"
+                data-en="Download .zip"
+                >Скачать .zip</a
+              >
+              <a
+                class="btn btn-ghost"
+                id="releases-btn"
+                href="https://github.com/Stamir36/solenne-ai/releases"
+                target="_blank"
+                rel="noreferrer"
+                data-ru="Все релизы"
+                data-en="All releases"
+                >Все релизы</a
+              >
+              <span class="hint" data-ru="companion.exe и solenne.models" data-en="companion.exe and solenne.models"
+                >companion.exe и solenne.models</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="support">
+        <div class="wrap">
+          <div class="panel">
+            <div>
+              <h2 data-ru="Поддержать проект" data-en="Support the project">Поддержать проект</h2>
+              <p
+                data-ru="Приложение бесплатное и работает локально: подписка не открывает функций, которые иначе были бы закрыты. Это способ сказать «продолжай» — ранние сборки, дневник разработки и ответы в Discord."
+                data-en="The app is free and runs locally: a subscription does not unlock anything that is otherwise locked. It is a way to say keep going — early builds, a development log and answers in Discord."
+              >
+                Приложение бесплатное и работает локально: подписка не открывает функций, которые иначе
+                были бы закрыты. Это способ сказать «продолжай» — ранние сборки, дневник разработки и
+                ответы в Discord.
+              </p>
+            </div>
+            <div class="panel-actions">
+              <a class="btn btn-solid" href="https://boosty.to/stamir36" target="_blank" rel="noreferrer">Boosty</a>
+              <a class="btn btn-ghost" href="https://www.patreon.com/c/stamir36" target="_blank" rel="noreferrer"
+                >Patreon</a
+              >
+              <a class="btn btn-ghost" href="https://discord.gg/eeJQyR4sA7" target="_blank" rel="noreferrer"
+                >Discord</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="faq">
+        <div class="wrap">
+          <header class="head">
+            <h2 data-ru="Вопросы" data-en="FAQ">Вопросы</h2>
+          </header>
+          <div class="faq">
+            <details>
+              <summary data-ru="Какая модель нужна?" data-en="Which model do I need?">Какая модель нужна?</summary>
+              <p
+                data-ru="Любая OpenAI-совместимая: LM Studio, Ollama, Groq, NVIDIA или свой туннель. Локально разумная база — модель 7–12B в кванте Q4 под настольную видеокарту."
+                data-en="Any OpenAI-compatible one: LM Studio, Ollama, Groq, NVIDIA or your own tunnel. Locally, a 7–12B model at Q4 is a comfortable baseline for a desktop GPU."
+              >
+                Любая OpenAI-совместимая: LM Studio, Ollama, Groq, NVIDIA или свой туннель. Локально
+                разумная база — модель 7–12B в кванте Q4 под настольную видеокарту.
+              </p>
+            </details>
+            <details>
+              <summary data-ru="Переписка куда-то уходит?" data-en="Is my chat uploaded?">
+                Переписка куда-то уходит?
+              </summary>
+              <p
+                data-ru="Только на тот адрес модели, который вы указали. Поиск по памяти, эмбеддинги, голос и дневник считаются на устройстве."
+                data-en="Only to the model endpoint you configured. Memory search, embeddings, voice and the diary are computed on the device."
+              >
+                Только на тот адрес модели, который вы указали. Поиск по памяти, эмбеддинги, голос и
+                дневник считаются на устройстве.
+              </p>
+            </details>
+            <details>
+              <summary data-ru="Почему закрытый код?" data-en="Why is the source closed?">
+                Почему закрытый код?
+              </summary>
+              <p
+                data-ru="Приложение — законченный продукт и содержит встроенных персонажей с лицензиями их авторов. Исходники не публикуются, чтобы сборку нельзя было выдать за свою."
+                data-en="The app is a finished product and ships characters licensed from their authors. The source is not published so the build cannot be passed off as someone else's work."
+              >
+                Приложение — законченный продукт и содержит встроенных персонажей с лицензиями их
+                авторов. Исходники не публикуются, чтобы сборку нельзя было выдать за свою.
+              </p>
+            </details>
+            <details>
+              <summary data-ru="Можно ли стримить?" data-en="Can I stream with it?">Можно ли стримить?</summary>
+              <p
+                data-ru="Да: OBS и окно под хромакей, чат Twitch/YouTube/TikTok и два режима — она ведёт эфир сама или вместе с вами, видя экран и слыша микрофон."
+                data-en="Yes: OBS plus a chroma-key window, Twitch/YouTube/TikTok chat, and two modes — she runs the show alone or co-hosts with you, seeing your screen and hearing your mic."
+              >
+                Да: OBS и окно под хромакей, чат Twitch/YouTube/TikTok и два режима — она ведёт эфир
+                сама или вместе с вами, видя экран и слыша микрофон.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap foot-inner">
+        <div class="foot-brand">
+          <a class="brand" href="#top">
+            <img src="assets/icon.png" alt="" width="32" height="32" />
+            <span>SOLENNE<em>AI</em></span>
+          </a>
+          <p class="foot-note">
+            <span
+              data-ru="Проприетарное программное обеспечение Stamir36. Встроенные персонажи принадлежат их авторам."
+              data-en="Proprietary software by Stamir36. Bundled characters belong to their authors."
+              >Проприетарное программное обеспечение Stamir36. Встроенные персонажи принадлежат их авторам.</span
+            >
+          </p>
+        </div>
+        <nav class="foot-links">
+          <a href="https://github.com/Stamir36/solenne-ai#readme" target="_blank" rel="noreferrer">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 4.5h6a2 2 0 0 1 2 2V20a2.5 2.5 0 0 0-2.5-2.5H4z" />
+              <path d="M20 4.5h-6a2 2 0 0 0-2 2V20a2.5 2.5 0 0 1 2.5-2.5H20z" />
+            </svg>
+            <span data-ru="Документация" data-en="Documentation">Документация</span>
+          </a>
+          <a href="https://github.com/Stamir36/solenne-ai/blob/HEAD/LICENSE" target="_blank" rel="noreferrer">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3l7 2.8v5.4c0 4.2-2.8 7.5-7 9-4.2-1.5-7-4.8-7-9V5.8z" />
+              <path d="M9 11.8l2.1 2.1 4-4" />
+            </svg>
+            <span data-ru="Лицензия" data-en="License">Лицензия</span>
+          </a>
+          <a id="repo-link-2" href="https://github.com/Stamir36/solenne-ai" target="_blank" rel="noreferrer">
+            <svg class="ico ico-fill" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z" />
+            </svg>
+            <span data-ru="GitHub" data-en="GitHub">GitHub</span>
+          </a>
+          <a href="https://discord.gg/eeJQyR4sA7" target="_blank" rel="noreferrer">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L4 20l1-3.8A8.5 8.5 0 1 1 21 11.5z" />
+              <circle cx="9.2" cy="11.8" r=".9" />
+              <circle cx="14.8" cy="11.8" r=".9" />
+            </svg>
+            <span data-ru="Discord" data-en="Discord">Discord</span>
+          </a>
+          <a href="https://boosty.to/stamir36" target="_blank" rel="noreferrer">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3.5l1.7 4.3 4.3 1.7-4.3 1.7L12 15.5l-1.7-4.3L6 9.5l4.3-1.7z" />
+              <path d="M17.5 15l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z" />
+            </svg>
+            <span data-ru="Boosty" data-en="Boosty">Boosty</span>
+          </a>
+          <a href="https://www.patreon.com/c/stamir36" target="_blank" rel="noreferrer">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 20s-7-4.3-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.7-7 9-7 9z" />
+            </svg>
+            <span data-ru="Patreon" data-en="Patreon">Patreon</span>
+          </a>
+        </nav>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

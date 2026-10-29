@@ -1,0 +1,62 @@
+Solenne AI — Proprietary Software License
+Copyright (c) 2026 Stamir36. All rights reserved.
+
+This repository and the Solenne AI application ("the Software") are proprietary.
+They are not open source. No permission is granted to use, copy, modify or
+distribute the source code of the application, because the source code is not
+published at all.
+
+1. PERMITTED USE
+
+   You may download and run the official builds of the Software for personal,
+   non-commercial use on your own devices. You may share a link to this
+   repository and to the official release page.
+
+2. RESTRICTIONS
+
+   Unless you have prior written permission from the copyright holder, you may
+   not:
+
+   a) copy, publish, mirror, sublicense, rent, sell or otherwise distribute the
+      Software or any part of it, including modified builds;
+   b) decompile, disassemble, reverse engineer or otherwise attempt to derive
+      the source code, internal data formats or encryption keys of the Software;
+   c) extract, decrypt, repack or redistribute bundled assets, including 3D
+      character models, voices, previews and the encrypted model container;
+   d) remove, obscure or alter any copyright, trademark or attribution notice;
+   e) present the Software, or a derivative of it, as your own product or as
+      the work of anyone other than Stamir36;
+   f) use the name "Solenne AI", its logo or its screenshots to imply
+      endorsement or affiliation without permission.
+
+3. THIRD-PARTY CONTENT
+
+   Bundled 3D characters, voices and other third-party assets remain the
+   property of their respective authors and are licensed to the project, not to
+   you. They are not included in this repository. Screenshots in this repository
+   show such characters and are provided for documentation purposes only.
+
+   The website files in this repository (index.html, styles.css, app.js,
+   assets/icon.png and screenshots/) are published so that the project page can
+   be hosted; no license is granted to reuse them as a template for another
+   product.
+
+4. NO WARRANTY
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM, OUT
+   OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OF THE SOFTWARE.
+
+5. TERMINATION
+
+   Any breach of these terms terminates your permission to use the Software.
+   On termination you must delete all copies in your possession, except that you
+   may keep the personal data the application created for you.
+
+6. CONTACT
+
+   For licensing, partnership or permission requests, contact Stamir36
+   through the repository's issue tracker or the contact address published on
+   the project page.

@@ -1,0 +1,1215 @@
+/* Solenne AI — product page.
+
+   The page borrows the application's own language: near-black plum, a single
+   violet accent, hairline separators and one rhythm for every section. No
+   cards with gradients, no glow blobs, no boxes inside boxes — the screenshots
+   are the only pictures here, so the layout stays quiet around them. */
+
+:root {
+  --bg: #0b0910;
+  --bg-soft: #110e19;
+  --line: rgba(255, 255, 255, 0.07);
+  --line-2: rgba(255, 255, 255, 0.13);
+  --text: #f3eff9;
+  --muted: #a39bb5;
+  --dim: #7a728b;
+  --accent: #9a7bff;
+  --accent-ink: #0c0912;
+  --radius: 18px;
+  --max: 1080px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 76px;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15.5px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Единственное свечение страницы: мягкое пятно за первым экраном. */
+body::before {
+  content: "";
+  position: absolute;
+  inset: -280px 0 auto;
+  height: 760px;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(52% 60% at 50% 0%, rgba(154, 123, 255, 0.16), transparent 70%);
+}
+
+h1,
+h2,
+h3,
+b,
+.brand,
+.btn,
+.num,
+.metrics b {
+  font-family: "Space Grotesk", "Manrope", ui-sans-serif, system-ui, sans-serif;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 26px;
+}
+
+/* --- navigation ----------------------------------------------------------- */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  height: 60px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.brand img {
+  border-radius: 7px;
+}
+
+.brand em {
+  margin-left: 3px;
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  vertical-align: top;
+}
+
+.nav-links {
+  display: flex;
+  gap: 22px;
+  margin-left: auto;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.nav-links a {
+  transition: color 0.2s var(--ease);
+}
+
+.nav-links a:hover {
+  color: var(--text);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  background: transparent;
+  color: var(--dim);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease);
+}
+
+.lang i {
+  width: 1px;
+  height: 10px;
+  background: var(--line-2);
+}
+
+.lang .on {
+  color: var(--text);
+}
+
+/* --- buttons -------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  padding: 0 17px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.btn-solid {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn-solid:hover {
+  background: #ae94ff;
+}
+
+.btn-ghost {
+  border-color: var(--line-2);
+  color: var(--muted);
+}
+
+.btn-ghost:hover {
+  border-color: rgba(154, 123, 255, 0.5);
+  color: var(--text);
+}
+
+/* --- hero ----------------------------------------------------------------- */
+
+.hero {
+  padding: 82px 0 68px;
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+h1 {
+  margin: 18px 0 0;
+  font-size: clamp(36px, 5vw, 60px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+
+h1 span {
+  display: block;
+}
+
+h1 .accent {
+  color: var(--accent);
+}
+
+.lede {
+  max-width: 62ch;
+  margin: 22px 0 0;
+  color: var(--muted);
+  font-size: 15.5px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.hero-actions .btn {
+  height: 42px;
+  padding: 0 20px;
+}
+
+.frame {
+  margin: 52px 0 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-soft);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.4);
+}
+
+.frame img {
+  width: 100%;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin: 40px 0 0;
+  padding: 22px 0 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+
+.metrics b {
+  display: block;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.metrics span {
+  display: block;
+  margin-top: 2px;
+  font-size: 12.5px;
+  color: var(--dim);
+}
+
+/* --- sections ------------------------------------------------------------- */
+
+.section {
+  padding: 74px 0;
+  border-top: 1px solid var(--line);
+}
+
+.head {
+  max-width: 66ch;
+  margin-bottom: 32px;
+}
+
+.head h2 {
+  margin: 0;
+  font-size: clamp(23px, 3vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.head p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 14.5px;
+}
+
+/* --- pillars -------------------------------------------------------------- */
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.pillars article {
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.num {
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+}
+
+.pillars h3 {
+  margin: 10px 0 8px;
+  font-size: 16.5px;
+  font-weight: 600;
+}
+
+.pillars p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13.8px;
+}
+
+/* --- feature list --------------------------------------------------------- */
+
+.items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px 34px;
+}
+
+.items article {
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.items h3 {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.items p {
+  margin: 8px 0 0;
+  color: var(--dim);
+  font-size: 13.5px;
+}
+
+/* --- gallery -------------------------------------------------------------- */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.shot {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bg-soft);
+}
+
+.shot img {
+  width: 100%;
+  border-bottom: 1px solid var(--line);
+}
+
+.shot figcaption {
+  padding: 12px 15px 14px;
+}
+
+.shot b {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.shot span {
+  display: block;
+  margin-top: 3px;
+  font-size: 12.3px;
+  color: var(--dim);
+}
+
+.shot.wide {
+  grid-column: 1 / -1;
+}
+
+/* --- comparison ----------------------------------------------------------- */
+
+.table-wrap {
+  overflow-x: auto;
+  border-top: 1px solid var(--line);
+}
+
+table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+thead th {
+  padding: 12px 14px;
+  text-align: left;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+  border-bottom: 1px solid var(--line);
+}
+
+tbody th {
+  width: 190px;
+  padding: 11px 14px;
+  text-align: left;
+  font-weight: 500;
+  color: var(--dim);
+  border-bottom: 1px solid var(--line);
+}
+
+tbody td {
+  padding: 11px 14px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+
+tbody tr:last-child th,
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+td.me {
+  color: var(--text);
+  background: rgba(154, 123, 255, 0.05);
+}
+
+th.me {
+  color: var(--accent);
+}
+
+.note {
+  margin: 20px 0 0;
+  max-width: 80ch;
+  color: var(--dim);
+  font-size: 12.8px;
+}
+
+/* --- download and support ------------------------------------------------- */
+
+/* Текст сверху, кнопки — одной строкой во всю ширину панели. В колонку кнопки
+   вставали лесенкой и занимали половину высоты блока. */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 30px 32px 26px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+}
+
+.panel h2 {
+  margin: 0;
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.panel p {
+  margin: 10px 0 0;
+  max-width: 58ch;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.panel .req {
+  margin-top: 14px;
+  color: var(--dim);
+  font-size: 12.5px;
+}
+
+.panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Кнопки делят строку поровну: две — по половине, три — по трети. */
+.panel-actions .btn {
+  flex: 1 1 0;
+  min-width: 150px;
+  height: 44px;
+}
+
+.panel-actions .hint {
+  flex: 1 0 100%;
+}
+
+.hint {
+  font-size: 11.5px;
+  color: var(--dim);
+}
+
+/* --- faq ------------------------------------------------------------------ */
+
+.faq {
+  border-top: 1px solid var(--line);
+}
+
+details {
+  border-bottom: 1px solid var(--line);
+}
+
+summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 2px;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::after {
+  content: "+";
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--dim);
+}
+
+details[open] summary::after {
+  content: "–";
+}
+
+details p {
+  margin: 0 0 18px;
+  max-width: 74ch;
+  padding-right: 30px;
+  color: var(--muted);
+  font-size: 13.8px;
+}
+
+/* --- footer --------------------------------------------------------------- */
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 44px 0 40px;
+}
+
+.foot-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 28px 40px;
+}
+
+.foot-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 430px;
+}
+
+.foot-brand .brand {
+  font-size: 16px;
+  letter-spacing: 0.07em;
+}
+
+.foot-brand .brand img {
+  border-radius: 9px;
+}
+
+.foot-note {
+  margin: 0;
+  color: var(--dim);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.foot-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  max-width: 560px;
+}
+
+.foot-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 13px 7px 11px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--muted);
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+.foot-links a:hover {
+  color: var(--text);
+  border-color: rgba(154, 123, 255, 0.45);
+  background: rgba(154, 123, 255, 0.06);
+}
+
+/* Иконки одним набором настроек: линии в цвет текста, без своих заливок. */
+.foot-links .ico {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.85;
+}
+
+.foot-links .ico-fill {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* --- responsive ----------------------------------------------------------- */
+
+@media (max-width: 920px) {
+  .items {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .pillars {
+    gap: 22px;
+  }
+}
+
+@media (max-width: 800px) {
+  .nav-links {
+    display: none;
+  }
+  .nav-actions {
+    margin-left: auto;
+  }
+  .hero {
+    padding: 60px 0 52px;
+  }
+  .section {
+    padding: 58px 0;
+  }
+  .gallery,
+  .metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .pillars {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .panel {
+    padding: 26px 24px;
+  }
+}
+
+@media (max-width: 560px) {
+  .wrap {
+    padding: 0 18px;
+  }
+  .items {
+    grid-template-columns: 1fr;
+  }
+  /* Две колонки на телефоне оставляли бы кадры шириной в 180 px. */
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+  .metrics {
+    gap: 18px;
+  }
+  .frame {
+    margin-top: 36px;
+  }
+  .btn {
+    height: 36px;
+    padding: 0 15px;
+    font-size: 13px;
+  }
+  .nav-actions .btn-ghost {
+    display: none;
+  }
+  /* В ряд — и на телефоне: три кнопки делят ширину, поля сжимаются. */
+  .panel {
+    gap: 18px;
+  }
+  .panel-actions .btn {
+    min-width: 0;
+    height: 38px;
+    padding: 0 10px;
+    font-size: 12.5px;
+  }
+  .panel-actions {
+    gap: 8px;
+  }
+  .foot-links {
+    justify-content: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    transition: none !important;
+  }
+}
+
+/* --- motion --------------------------------------------------------------- */
+
+/* Английская версия придерживается до подстановки текста: разметка русская, и
+   без этого посетитель на секунду видит чужой язык. Запасная анимация
+   возвращает видимость чуть позже, даже если скрипт не отработал. */
+html[data-boot] body {
+  opacity: 0;
+  animation: boot-fallback 0.01s linear 1.1s forwards;
+}
+
+@keyframes boot-fallback {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Класс `anim` ставит app.js и только если движение не отключено в системе.
+   Без него разметка видна сразу: появление секций — не условие прочтения. */
+html.anim [data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+html.anim [data-reveal].in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s var(--ease) var(--d, 0s),
+    transform 0.7s var(--ease) var(--d, 0s);
+}
+
+html.anim .hero .eyebrow,
+html.anim .hero h1 span,
+html.anim .hero .lede,
+html.anim .hero-actions,
+html.anim .hero-shot,
+html.anim .metrics li {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: rise 0.85s var(--ease) forwards;
+}
+
+html.anim .hero .eyebrow {
+  animation-delay: 0.04s;
+}
+
+html.anim .hero h1 span:first-child {
+  animation-delay: 0.12s;
+}
+
+html.anim .hero h1 span:last-child {
+  animation-delay: 0.2s;
+}
+
+html.anim .hero .lede {
+  animation-delay: 0.28s;
+}
+
+html.anim .hero-actions {
+  animation-delay: 0.36s;
+}
+
+html.anim .hero-shot {
+  animation-delay: 0.44s;
+}
+
+html.anim .metrics li {
+  animation-delay: 0.52s;
+}
+
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Свечение за первым экраном дышит очень медленно: заметно на видео, не мешает
+   читать. */
+body::before {
+  animation: glow 16s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    opacity: 0.72;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(18px) scale(1.05);
+  }
+}
+
+/* --- hover polish --------------------------------------------------------- */
+
+.btn {
+  transition:
+    background 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    color 0.2s var(--ease),
+    transform 0.25s var(--ease);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-solid {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-solid::after {
+  content: "";
+  position: absolute;
+  inset: -40% -10%;
+  background: linear-gradient(
+    115deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.38) 50%,
+    transparent 62%
+  );
+  transform: translateX(-130%);
+  transition: transform 0.75s var(--ease);
+}
+
+.btn-solid:hover::after {
+  transform: translateX(130%);
+}
+
+.nav {
+  transition:
+    background 0.3s var(--ease),
+    box-shadow 0.3s var(--ease),
+    border-color 0.3s var(--ease);
+}
+
+.nav.scrolled {
+  background: color-mix(in srgb, var(--bg) 93%, transparent);
+  border-bottom-color: var(--line-2);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.38);
+}
+
+.nav-links a {
+  position: relative;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -7px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s var(--ease);
+}
+
+.nav-links a:hover::after,
+.nav-links a.on::after {
+  transform: scaleX(1);
+}
+
+.nav-links a.on {
+  color: var(--text);
+}
+
+.items article,
+.pillars article {
+  transition: border-color 0.3s var(--ease);
+}
+
+.items article:hover,
+.pillars article:hover {
+  border-top-color: rgba(154, 123, 255, 0.55);
+}
+
+.items h3,
+.pillars h3 {
+  transition: color 0.3s var(--ease);
+}
+
+.items article:hover h3,
+.pillars article:hover h3 {
+  color: color-mix(in srgb, var(--accent) 62%, var(--text));
+}
+
+.shot {
+  transition:
+    transform 0.4s var(--ease),
+    border-color 0.4s var(--ease),
+    box-shadow 0.4s var(--ease);
+}
+
+.shot img {
+  transition: transform 0.9s var(--ease);
+}
+
+.shot:hover {
+  transform: translateY(-3px);
+  border-color: rgba(154, 123, 255, 0.3);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.42);
+}
+
+.shot:hover img {
+  transform: scale(1.02);
+}
+
+.panel {
+  transition: border-color 0.4s var(--ease);
+}
+
+.panel:hover {
+  border-color: var(--line-2);
+}
+
+/* --- help page ------------------------------------------------------------ */
+
+:root {
+  --warn: #e9b871;
+}
+
+.help-hero {
+  padding-bottom: 42px;
+}
+
+.steps {
+  display: grid;
+  gap: 14px;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steps li {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  align-items: start;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 13.8px;
+}
+
+.steps b {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(154, 123, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(154, 123, 255, 0.1);
+  color: var(--accent);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 26px;
+}
+
+.card {
+  padding: 20px 22px 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--bg-soft);
+  transition:
+    border-color 0.3s var(--ease),
+    background 0.3s var(--ease);
+}
+
+.card:hover {
+  border-color: var(--line-2);
+  background: #131020;
+}
+
+.card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.card p {
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: 13.3px;
+}
+
+.tag {
+  flex: none;
+  padding: 2px 9px;
+  border: 1px solid rgba(154, 123, 255, 0.32);
+  border-radius: 999px;
+  color: var(--accent);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.kv {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.kv > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kv span {
+  flex: none;
+  width: 62px;
+  color: var(--dim);
+  font-size: 9.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.kv code {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  padding: 5px 9px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
+  font-size: 11.8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copy {
+  flex: none;
+  padding: 4px 9px;
+  border: 1px solid var(--line-2);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--dim);
+  font-family: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  transition:
+    color 0.2s var(--ease),
+    border-color 0.2s var(--ease);
+}
+
+.copy:hover {
+  color: var(--text);
+  border-color: rgba(154, 123, 255, 0.45);
+}
+
+.copy.done {
+  color: var(--accent);
+  border-color: rgba(154, 123, 255, 0.6);
+}
+
+.card-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0 0;
+  color: var(--dim);
+  font-size: 11.8px;
+}
+
+.card-foot a {
+  color: var(--accent);
+}
+
+.card-foot a:hover {
+  text-decoration: underline;
+}
+
+.warn {
+  margin: 18px 0 0;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--warn) 32%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--warn) 7%, transparent);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 860px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .card {
+    padding: 18px 18px 16px;
+  }
+
+  .kv > div {
+    flex-wrap: wrap;
+  }
+
+  .kv span {
+    width: 100%;
+  }
+
+  .kv code {
+    flex-basis: 100%;
+    order: 2;
+  }
+
+  .copy {
+    order: 3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+  }
+
+  html[data-boot] body {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+/* Ссылка на инструкцию стоит в тексте панели, а не в ряду кнопок: три кнопки
+   в строке ломали ровный ряд на телефоне. */
+.panel .req a {
+  color: var(--accent);
+}
+
+.panel .req a:hover {
+  text-decoration: underline;
+}

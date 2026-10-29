@@ -1,0 +1,55 @@
+# Публикация сайта на GitHub Pages.
+#
+# Сайт лежит в папке `site/` — целиком, со своими стилями, скриншотами и
+# иконками. Сборщика нет: папка как есть становится корнем страницы. Поэтому
+# корень репозитория свободен под README, лицензию и всё, что появится позже.
+#
+# Включение: Settings → Pages → Source: GitHub Actions. После этого каждый
+# пуш в main обновляет страницу, а ручной запуск доступен во вкладке Actions.
+
+name: Publish site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Если папку переименуют или она не доедет до репозитория, сборка
+      # упадёт здесь, а не отдаст пустую страницу.
+      - name: Check site files
+        run: |
+          test -f site/index.html
+          test -f site/styles.css
+          test -f site/app.js
+          test -d site/screenshots
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy
+        id: deploy
+        uses: actions/deploy-pages@v4

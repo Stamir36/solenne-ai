@@ -1,0 +1,850 @@
+<!doctype html>
+<!-- Solenne AI — help page.
+
+     Same shell as the product page: one near-black plum background, one violet
+     accent, hairline cards. The only thing this page does is remove the first
+     obstacle — "where do I get a model and a voice". Everything listed here has
+     a free path; nothing requires a card up front.
+
+     Text lives in leaf elements with data-ru/data-en, see app.js. -->
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Помощь — подключить модель и голос | Solenne AI</title>
+    <meta
+      name="description"
+      content="Как подключить бесплатную модель и голос к Solenne AI: ключи Google AI Studio, Groq, OpenRouter и NVIDIA, Ollama и LM Studio локально, Silero и Edge TTS для речи."
+    />
+    <meta name="theme-color" content="#0b0910" />
+    <meta property="og:title" content="Solenne AI — connect a model and a voice" />
+    <meta
+      property="og:description"
+      content="Free paths to a working companion: a cloud key in one evening, or a model on your own GPU. Voice included."
+    />
+    <meta property="og:image" content="screenshots/provider.webp" />
+    <script>
+      /* Язык выбирается до первой отрисовки: сохранённый выбор, иначе язык
+         браузера. Разметка по умолчанию русская, поэтому для английского
+         страница придерживается до подстановки текста (см. styles.css). */
+      (function () {
+        var lang = null;
+        try {
+          lang = localStorage.getItem("solenne-lang");
+        } catch (e) {
+          /* приватный режим может запретить хранилище */
+        }
+        if (lang !== "ru" && lang !== "en") {
+          var list =
+            navigator.languages && navigator.languages.length
+              ? navigator.languages
+              : [navigator.language || ""];
+          lang = null;
+          for (var i = 0; i < list.length && !lang; i += 1) {
+            var code = String(list[i]).toLowerCase();
+            if (code.indexOf("ru") === 0) lang = "ru";
+            else if (code.indexOf("en") === 0) lang = "en";
+          }
+          lang = lang || "ru";
+        }
+        document.documentElement.lang = lang;
+        if (lang === "en") document.documentElement.setAttribute("data-boot", "");
+      })();
+    </script>
+    <link rel="icon" href="assets/icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="help">
+    <header class="nav">
+      <div class="wrap nav-inner">
+        <a class="brand" href="index.html">
+          <img src="assets/icon.png" alt="" width="26" height="26" />
+          <span>SOLENNE<em>AI</em></span>
+        </a>
+        <nav class="nav-links">
+          <a href="index.html#alive" data-ru="Почему живая" data-en="Why it feels alive">Почему живая</a>
+          <a href="index.html#features" data-ru="Возможности" data-en="Features">Возможности</a>
+          <a href="index.html#gallery" data-ru="Скриншоты" data-en="Screenshots">Скриншоты</a>
+          <a href="help.html" class="on" data-ru="Помощь" data-en="Help">Помощь</a>
+        </nav>
+        <div class="nav-actions">
+          <button class="lang" id="lang" type="button" aria-label="Switch language">
+            <span data-lang="ru">RU</span><i></i><span data-lang="en">EN</span>
+          </button>
+          <a
+            class="btn btn-ghost"
+            id="repo-link"
+            href="https://github.com/Stamir36/solenne-ai"
+            target="_blank"
+            rel="noreferrer"
+            data-ru="GitHub"
+            data-en="GitHub"
+            >GitHub</a
+          >
+          <a class="btn btn-solid" href="index.html#download" data-ru="Скачать" data-en="Download">Скачать</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero help-hero">
+        <div class="wrap">
+          <p class="eyebrow">
+            <span data-ru="Помощь · модель и голос" data-en="Help · model and voice"
+              >Помощь · модель и голос</span
+            >
+          </p>
+          <h1>
+            <span data-ru="Подключить модель —" data-en="Connecting a model takes">Подключить модель —</span>
+            <span class="accent" data-ru="пять минут" data-en="five minutes">пять минут</span>
+          </h1>
+          <p class="lede">
+            <span
+              data-ru="Ниже только бесплатные пути: ключ из облака или модель на вашей видеокарте. Платить, чтобы просто поговорить, не нужно — и голос тоже есть без подписки."
+              data-en="Everything below is a free path: a cloud key or a model on your own GPU. You do not have to pay to talk to her — and the voice does not need a subscription either."
+              >Ниже только бесплатные пути: ключ из облака или модель на вашей видеокарте. Платить, чтобы
+              просто поговорить, не нужно — и голос тоже есть без подписки.</span
+            >
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-solid" href="#llm" data-ru="К модели" data-en="To the model">К модели</a>
+            <a class="btn btn-ghost" href="#voice" data-ru="К голосу" data-en="To the voice">К голосу</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="llm">
+        <div class="wrap">
+          <header class="head">
+            <h2 data-ru="Бесплатная модель в облаке" data-en="A free model in the cloud">
+              Бесплатная модель в облаке
+            </h2>
+            <p
+              data-ru="Ключ берётся без карты и вставляется один раз. Лимиты бесплатных тарифов меняются каждые пару месяцев — сверяйте цифры в кабинете провайдера, а не в чужих статьях."
+              data-en="Keys are handed out without a card and pasted once. Free-tier limits change every couple of months — check the numbers in the provider console, not in someone's article."
+            >
+              Ключ берётся без карты и вставляется один раз. Лимиты бесплатных тарифов меняются каждые
+              пару месяцев — сверяйте цифры в кабинете провайдера, а не в чужих статьях.
+            </p>
+          </header>
+
+          <ol class="steps">
+            <li data-reveal>
+              <b>1</b>
+              <span
+                data-ru="Откройте в приложении «Подключение» и выберите провайдера «Свой API»."
+                data-en="Open “Connection” in the app and pick the “Custom API” provider."
+                >Откройте в приложении «Подключение» и выберите провайдера «Свой API».</span
+              >
+            </li>
+            <li data-reveal>
+              <b>2</b>
+              <span
+                data-ru="Возьмите ключ по ссылке в карточке — регистрация занимает минуту, карта не нужна."
+                data-en="Take a key from the link in a card below — signing up takes a minute and needs no card."
+                >Возьмите ключ по ссылке в карточке — регистрация занимает минуту, карта не нужна.</span
+              >
+            </li>
+            <li data-reveal>
+              <b>3</b>
+              <span
+                data-ru="Вставьте адрес, ключ и имя модели. Кнопка «Копировать» рядом с адресом избавляет от опечаток."
+                data-en="Paste the address, the key and the model name. The “Copy” button next to each address saves you a typo."
+                >Вставьте адрес, ключ и имя модели. Кнопка «Копировать» рядом с адресом избавляет от
+                опечаток.</span
+              >
+            </li>
+            <li data-reveal>
+              <b>4</b>
+              <span
+                data-ru="Нажмите «Проверить подключение»: зелёная точка — можно разговаривать."
+                data-en="Press “Check connection”: a green dot means you can start talking."
+                >Нажмите «Проверить подключение»: зелёная точка — можно разговаривать.</span
+              >
+            </li>
+          </ol>
+
+          <div class="cards">
+            <article class="card" data-reveal>
+              <div class="card-head">
+                <h3>Google AI Studio</h3>
+                <span class="tag" data-ru="бесплатно" data-en="free">бесплатно</span>
+              </div>
+              <p
+                data-ru="Самый короткий путь к первому разговору: ключ без карты, изображения и потоковый ответ поддерживаются. Хороший выбор, если не хочется ничего устанавливать."
+                data-en="The shortest path to a first conversation: a key without a card, images and streaming supported. A good pick if you would rather not install anything."
+              >
+                Самый короткий путь к первому разговору: ключ без карты, изображения и потоковый ответ
+                поддерживаются. Хороший выбор, если не хочется ничего устанавливать.
+              </p>
+              <div class="kv">
+                <div>
+                  <span data-ru="адрес" data-en="address">адрес</span>
+                  <code>https://generativelanguage.googleapis.com/v1beta/openai/</code>
+                  <button
+                    class="copy"
+                    type="button"
+                    data-copy="https://generativelanguage.googleapis.com/v1beta/openai/"
+                    data-ru="Копировать"
+                    data-en="Copy"
+                  >
+                    Копировать
+                  </button>
+                </div>
+                <div>
+                  <span data-ru="модель" data-en="model">модель</span>
+                  <code>gemini-2.5-flash</code>
+                  <button
+                    class="copy"
+                    type="button"
+                    data-copy="gemini-2.5-flash"
+                    data-ru="Копировать"
+                    data-en="Copy"
+                  >
+                    Копировать
+                  </button>
+                </div>
+              </div>
+              <p class="card-foot">
+                <a href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer"
+                  ><span data-ru="Ключ: aistudio.google.com" data-en="Key: aistudio.google.com"
+                    >Ключ: aistudio.google.com</span
+                  ></a
+                >
+                <span class="dim" data-ru="· лимит запросов в минуту и в день" data-en="· per-minute and per-day request limits"
+                  >· лимит запросов в минуту и в день</span
+                >
+              </p>
+            </article>
+
+            <article class="card" data-reveal>
+              <div class="card-head">
+                <h3>Groq Cloud</h3>
+                <span class="tag" data-ru="бесплатно" data-en="free">бесплатно</span>
+              </div>
+              <p
+                data-ru="Очень быстрое железо: ответ приходит быстрее, чем успеваешь дочитать субтитр. Открытые модели Llama, Qwen и GPT-OSS."
+                data-en="Very fast hardware: the answer lands before you finish reading the subtitle. Open Llama, Qwen and GPT-OSS models."
+              >
+                Очень быстрое железо: ответ приходит быстрее, чем успеваешь дочитать субтитр. Открытые
+                модели Llama, Qwen и GPT-OSS.
+              </p>
+              <div class="kv">
+                <div>
+                  <span data-ru="адрес" data-en="address">адрес</span>
+                  <code>https://api.groq.com/openai/v1</code>
+                  <button
+                    class="copy"
+                    type="button"
+                    data-copy="https://api.groq.com/openai/v1"
+                    data-ru="Копировать"
+                    data-en="Copy"
+                  >
+                    Копировать
+                  </button>
+                </div>
+                <div>
+                  <span data-ru="модель" data-en="model">модель</span>
+                  <code>openai/gpt-oss-20b</code>
+                  <button
+                    class="copy"
+                    type="button"
+                    data-copy="openai/gpt-oss-20b"
+                    data-ru="Копировать"
+                    data-en="Copy"
+                  >
+                    Копировать
+                  </button>
+                </div>
+              </div>
+              <p class="card-foot">
+                <a href="https://console.groq.com/keys" target="_blank" rel="noreferrer"
+                  ><span data-ru="Ключ: console.groq.com" data-en="Key: console.groq.com"
+                    >Ключ: console.groq.com</span
+                  ></a
+                >
+                <span class="dim" data-ru="· лимиты по организации" data-en="· limits per organisation"
+                  >· лимиты по организации</span
+                >
+              </p>
+            </article>
+
+            <article class="card" data-reveal>
+              <div class="card-head">
+                <h3>OpenRouter</h3>
+                <span class="tag" data-ru="бесплатно" data-en="free">бесплатно</span>
+              </div>
+              <p
+                data-ru="Один ключ на десятки моделей: удобно перебирать характеры, пока не найдётся тот, что звучит правильно. У части моделей есть вариант с пометкой :free."
+                data-en="One key for dozens of models: handy for trying characters until one sounds right. Some models come in a :free variant."
+              >
+                Один ключ на десятки моделей: удобно перебирать характеры, пока не найдётся тот, что
+                звучит правильно. У части моделей есть вариант с пометкой :free.
+              </p>
+              <div class="kv">
+                <div>
+                  <span data-ru="адрес" data-en="address">адрес</span>
+                  <code>https://openrouter.ai/api/v1</code>
+                  <button
+                    class="copy"
+                    type="button"
+                    data-copy="https://openrouter.ai/api/v1"
+                    data-ru="Копировать"
+                    data-en="Copy"
+                  >
+                    Копировать
+                  </button>
+                </div>
+                <div>
+                  <span data-ru="модель" data-en="model">модель</span>
+                  <code>deepseek/deepseek-chat-v3.1:free</code>
+                  <button
+                    class="copy"
+                    type="button"
+                    data-copy="deepseek/deepseek-chat-v3.1:free"
+                    data-ru="Копировать"
+                    data-en="Copy"
+                  >
+                    Копировать
+                  </button>
+                </div>
+              </div>
+              <p class="card-foot">
+                <a href="https://openrouter.ai/keys" target="_blank" rel="noreferrer"
+                  ><span data-ru="Ключ: openrouter.ai/keys" data-en="Key: openrouter.ai/keys"
+                    >Ключ: openrouter.ai/keys</span
+                  ></a
+                >
+                <span class="dim" data-ru="· у :free моделей суточный потолок" data-en="· :free models have a daily cap"
+                  >· у :free моделей суточный потолок</span
+                >
+              </p>
+            </article>
+
+            <article class="card" data-reveal>
+              <div class="card-head">
+                <h3>NVIDIA Build</h3>
+                <span class="tag" data-ru="бесплатно" data-en="free">бесплатно</span>
+              </div>
+              <p
+                data-ru="Каталог открытых моделей с ключом для прототипов, включая мультимодальные. Пригодится, если хочется показать ей экран или камеру."
+                data-en="A catalogue of open models with a prototyping key, multimodal ones included. Useful if you want her to see your screen or camera."
+              >
+                Каталог открытых моделей с ключом для прототипов, включая мультимодальные. Пригодится,
+                если хочется показать ей экран или камеру.
+              </p>
+              <div class="kv">
+                <div>
+                  <span data-ru="адрес" data-en="address">адрес</span>
+                  <code>https://integrate.api.nvidia.com/v1</code>
+                  <button
+                    class="copy"
+                    type="button"
+                    data-copy="https://integrate.api.nvidia.com/v1"
+                    data-ru="Копировать"
+                    data-en="Copy"
+                  >
+                    Копировать
+                  </button>
+                </div>
+                <div>
+                  <span data-ru="модель" data-en="model">модель</span>
+                  <code>meta/llama-3.3-70b-instruct</code>
+                  <button
+                    class="copy"
+                    type="button"
+                    data-copy="meta/llama-3.3-70b-instruct"
+                    data-ru="Копировать"
+                    data-en="Copy"
+                  >
+                    Копировать
+                  </button>
+                </div>
+              </div>
+              <p class="card-foot">
+                <a href="https://build.nvidia.com/settings/api-keys" target="_blank" rel="noreferrer"
+                  ><span data-ru="Ключ: build.nvidia.com" data-en="Key: build.nvidia.com"
+                    >Ключ: build.nvidia.com</span
+                  ></a
+                >
+                <span class="dim" data-ru="· лимит зависит от модели" data-en="· the limit depends on the model"
+                  >· лимит зависит от модели</span
+                >
+              </p>
+            </article>
+
+            <article class="card" data-reveal>
+              <div class="card-head">
+                <h3>Mistral</h3>
+                <span class="tag" data-ru="бесплатно" data-en="free">бесплатно</span>
+              </div>
+              <p
+                data-ru="Европейский провайдер с бесплатным режимом без карты. Разговорный тон и аккуратный русский — заметно, если она много говорит."
+                data-en="A European provider with a free tier and no card. Conversational tone and careful Russian — noticeable when she talks a lot."
+              >
+                Европейский провайдер с бесплатным режимом без карты. Разговорный тон и аккуратный
+                русский — заметно, если она много говорит.
+              </p>
+              <div class="kv">
+                <div>
+                  <span data-ru="адрес" data-en="address">адрес</span>
+                  <code>https://api.mistral.ai/v1</code>
+                  <button
+                    class="copy"
+                    type="button"
+                    data-copy="https://api.mistral.ai/v1"
+                    data-ru="Копировать"
+                    data-en="Copy"
+                  >
+                    Копировать
+                  </button>
+                </div>
+                <div>
+                  <span data-ru="модель" data-en="model">модель</span>
+                  <code>mistral-small-latest</code>
+                  <button
+                    class="copy"
+                    type="button"
+                    data-copy="mistral-small-latest"
+                    data-ru="Копировать"
+                    data-en="Copy"
+                  >
+                    Копировать
+                  </button>
+                </div>
+              </div>
+              <p class="card-foot">
+                <a href="https://console.mistral.ai/" target="_blank" rel="noreferrer"
+                  ><span data-ru="Ключ: console.mistral.ai" data-en="Key: console.mistral.ai"
+                    >Ключ: console.mistral.ai</span
+                  ></a
+                >
+                <span class="dim" data-ru="· ограничения по модели" data-en="· per-model restrictions"
+                  >· ограничения по модели</span
+                >
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="local">
+        <div class="wrap">
+          <header class="head">
+            <h2 data-ru="На своём компьютере" data-en="On your own machine">На своём компьютере</h2>
+            <p
+              data-ru="Ключ не нужен и интернет тоже: модель работает на вашей видеокарте. Бесплатно навсегда и ничего не уходит наружу — но и медленнее облака."
+              data-en="No key, no internet: the model runs on your GPU. Free forever and nothing leaves the machine — but slower than the cloud."
+            >
+              Ключ не нужен и интернет тоже: модель работает на вашей видеокарте. Бесплатно навсегда и
+              ничего не уходит наружу — но и медленнее облака.
+            </p>
+          </header>
+
+          <div class="cards">
+            <article class="card" data-reveal>
+              <div class="card-head">
+                <h3>Ollama</h3>
+                <span class="tag" data-ru="локально" data-en="local">локально</span>
+              </div>
+              <p
+                data-ru="Поставили приложение, выполнили ollama run qwen3:8b — сервер уже слушает порт. В приложении достаточно выбрать провайдера «Ollama»."
+                data-en="Install it, run ollama run qwen3:8b — the server is already listening. In the app just pick the “Ollama” provider."
+              >
+                Поставили приложение, выполнили ollama run qwen3:8b — сервер уже слушает порт. В
+                приложении достаточно выбрать провайдера «Ollama».
+              </p>
+              <div class="kv">
+                <div>
+                  <span data-ru="адрес" data-en="address">адрес</span>
+                  <code>http://localhost:11434/v1</code>
+                  <button
+                    class="copy"
+                    type="button"
+                    data-copy="http://localhost:11434/v1"
+                    data-ru="Копировать"
+                    data-en="Copy"
+                  >
+                    Копировать
+                  </button>
+                </div>
+                <div>
+                  <span data-ru="модель" data-en="model">модель</span>
+                  <code>qwen3:8b</code>
+                  <button class="copy" type="button" data-copy="qwen3:8b" data-ru="Копировать" data-en="Copy">
+                    Копировать
+                  </button>
+                </div>
+              </div>
+              <p class="card-foot">
+                <a href="https://ollama.com/download" target="_blank" rel="noreferrer"
+                  ><span data-ru="Скачать: ollama.com" data-en="Download: ollama.com"
+                    >Скачать: ollama.com</span
+                  ></a
+                >
+              </p>
+            </article>
+
+            <article class="card" data-reveal>
+              <div class="card-head">
+                <h3>LM Studio</h3>
+                <span class="tag" data-ru="локально" data-en="local">локально</span>
+              </div>
+              <p
+                data-ru="То же самое, но с окном: модель скачивается во вкладке Discover, дальше Start server — и адрес готов. Ключ не требуется."
+                data-en="The same thing with a window: download a model in Discover, hit Start server, and the address is ready. No key required."
+              >
+                То же самое, но с окном: модель скачивается во вкладке Discover, дальше Start server — и
+                адрес готов. Ключ не требуется.
+              </p>
+              <div class="kv">
+                <div>
+                  <span data-ru="адрес" data-en="address">адрес</span>
+                  <code>http://localhost:1234/v1</code>
+                  <button
+                    class="copy"
+                    type="button"
+                    data-copy="http://localhost:1234/v1"
+                    data-ru="Копировать"
+                    data-en="Copy"
+                  >
+                    Копировать
+                  </button>
+                </div>
+                <div>
+                  <span data-ru="модель" data-en="model">модель</span>
+                  <code>local-model</code>
+                  <button
+                    class="copy"
+                    type="button"
+                    data-copy="local-model"
+                    data-ru="Копировать"
+                    data-en="Copy"
+                  >
+                    Копировать
+                  </button>
+                </div>
+              </div>
+              <p class="card-foot">
+                <a href="https://lmstudio.ai/" target="_blank" rel="noreferrer"
+                  ><span data-ru="Скачать: lmstudio.ai" data-en="Download: lmstudio.ai"
+                    >Скачать: lmstudio.ai</span
+                  ></a
+                >
+              </p>
+            </article>
+          </div>
+
+          <p class="warn" data-reveal>
+            <span
+              data-ru="«Нет связи» с локальным сервером почти всегда значит CORS. В LM Studio включите «Enable CORS» в настройках сервера; для Ollama закройте её и запустите заново с OLLAMA_ORIGINS=*."
+              data-en="“No connection” to a local server almost always means CORS. In LM Studio turn on “Enable CORS” in the server settings; for Ollama quit it and start it again with OLLAMA_ORIGINS=*."
+              >«Нет связи» с локальным сервером почти всегда значит CORS. В LM Studio включите «Enable
+              CORS» в настройках сервера; для Ollama закройте её и запустите заново с
+              OLLAMA_ORIGINS=*.</span
+            >
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="voice">
+        <div class="wrap">
+          <header class="head">
+            <h2 data-ru="Голос" data-en="Voice">Голос</h2>
+            <p
+              data-ru="Два движка уже внутри и не требуют ничего: Silero работает на этом компьютере, Edge TTS — на серверах Microsoft. Оба бесплатные, ключ не нужен."
+              data-en="Two engines are already inside and need nothing: Silero runs on this computer, Edge TTS on Microsoft servers. Both are free and need no key."
+            >
+              Два движка уже внутри и не требуют ничего: Silero работает на этом компьютере, Edge TTS —
+              на серверах Microsoft. Оба бесплатные, ключ не нужен.
+            </p>
+          </header>
+
+          <ol class="steps">
+            <li data-reveal>
+              <b>1</b>
+              <span
+                data-ru="Настройки → «Голос». Выберите движок: Silero для офлайна, Edge для ровного звучания."
+                data-en="Settings → “Voice”. Pick an engine: Silero for offline, Edge for smoother sound."
+                >Настройки → «Голос». Выберите движок: Silero для офлайна, Edge для ровного звучания.</span
+              >
+            </li>
+            <li data-reveal>
+              <b>2</b>
+              <span
+                data-ru="Выберите голос из списка и нажмите прослушивание — так слышно, как она произносит именно ваши фразы."
+                data-en="Pick a voice from the list and play the sample — that is how you hear her saying your kind of lines."
+                >Выберите голос из списка и нажмите прослушивание — так слышно, как она произносит именно
+                ваши фразы.</span
+              >
+            </li>
+            <li data-reveal>
+              <b>3</b>
+              <span
+                data-ru="Вернитесь в чат: теперь ответы озвучиваются. Липсинк считается по настоящему аудио, отдельно настраивать нечего."
+                data-en="Go back to the chat: replies are spoken now. Lip-sync is computed from the real audio, nothing to tune."
+                >Вернитесь в чат: теперь ответы озвучиваются. Липсинк считается по настоящему аудио, отдельно
+                настраивать нечего.</span
+              >
+            </li>
+          </ol>
+
+          <div class="cards">
+            <article class="card" data-reveal>
+              <div class="card-head">
+                <h3>Silero</h3>
+                <span class="tag" data-ru="локально" data-en="local">локально</span>
+              </div>
+              <p
+                data-ru="Русский и английский, без интернета и без ключа. Голоса становятся один раз при первом включении — дальше всё работает офлайн."
+                data-en="Russian and English, no internet and no key. Voices are installed once on first use — after that it all runs offline."
+              >
+                Русский и английский, без интернета и без ключа. Голоса становятся один раз при первом
+                включении — дальше всё работает офлайн.
+              </p>
+            </article>
+
+            <article class="card" data-reveal>
+              <div class="card-head">
+                <h3>Edge TTS</h3>
+                <span class="tag" data-ru="бесплатно" data-en="free">бесплатно</span>
+              </div>
+              <p
+                data-ru="Звучит ровнее и живее, голосов больше. Обращается к серверам Microsoft, поэтому нужен интернет — зато ни регистрации, ни ключа."
+                data-en="Smoother and livelier, with more voices. It talks to Microsoft servers, so it needs internet — but there is no sign-up and no key."
+              >
+                Звучит ровнее и живее, голосов больше. Обращается к серверам Microsoft, поэтому нужен
+                интернет — зато ни регистрации, ни ключа.
+              </p>
+            </article>
+
+            <article class="card" data-reveal>
+              <div class="card-head">
+                <h3>Fish Audio</h3>
+                <span class="tag" data-ru="бесплатный тариф" data-en="free tier">бесплатный тариф</span>
+              </div>
+              <p
+                data-ru="Клонирование голоса по короткому образцу. На бесплатном тарифе есть запас символов; для русского выбирайте модель с поддержкой языка."
+                data-en="Voice cloning from a short sample. The free tier includes a character allowance; for Russian pick a model that supports the language."
+              >
+                Клонирование голоса по короткому образцу. На бесплатном тарифе есть запас символов; для
+                русского выбирайте модель с поддержкой языка.
+              </p>
+              <p class="card-foot">
+                <a href="https://fish.audio/" target="_blank" rel="noreferrer"
+                  ><span data-ru="Ключ: fish.audio" data-en="Key: fish.audio">Ключ: fish.audio</span></a
+                >
+              </p>
+            </article>
+
+            <article class="card" data-reveal>
+              <div class="card-head">
+                <h3>ElevenLabs</h3>
+                <span class="tag" data-ru="бесплатный тариф" data-en="free tier">бесплатный тариф</span>
+              </div>
+              <p
+                data-ru="Лучшее качество из коробки и много готовых голосов. Бесплатный тариф ограничен символами в месяц, а из России и ряда регионов сервис отвечает отказом даже с рабочим ключом."
+                data-en="The best out-of-the-box quality and plenty of ready voices. The free tier is capped in characters per month, and from Russia and several other regions it refuses even a valid key."
+              >
+                Лучшее качество из коробки и много готовых голосов. Бесплатный тариф ограничен символами
+                в месяц, а из России и ряда регионов сервис отвечает отказом даже с рабочим ключом.
+              </p>
+              <p class="card-foot">
+                <a href="https://elevenlabs.io/" target="_blank" rel="noreferrer"
+                  ><span data-ru="Ключ: elevenlabs.io" data-en="Key: elevenlabs.io">Ключ: elevenlabs.io</span></a
+                >
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="trouble">
+        <div class="wrap">
+          <header class="head">
+            <h2 data-ru="Если не работает" data-en="When it does not work">Если не работает</h2>
+            <p
+              data-ru="Четыре причины закрывают почти все случаи: опечатка в адресе, чужое имя модели, забытый CORS и ключ не из того кабинета."
+              data-en="Four causes cover almost every case: a typo in the address, a wrong model name, missing CORS and a key from another account."
+            >
+              Четыре причины закрывают почти все случаи: опечатка в адресе, чужое имя модели, забытый
+              CORS и ключ не из того кабинета.
+            </p>
+          </header>
+          <div class="faq">
+            <details>
+              <summary data-ru="«Нет связи» — что проверить?" data-en="“No connection” — what do I check?">
+                «Нет связи» — что проверить?
+              </summary>
+              <p
+                data-ru="Адрес должен заканчиваться на /v1 (или /v1beta/openai/ у Gemini) — без него сервер не отвечает на запросы чата. Для локальных серверов включите CORS. И проверьте, что сервер вообще запущен: у Ollama это видно по значку в трее."
+                data-en="The address must end with /v1 (or /v1beta/openai/ for Gemini) — without it the server does not answer chat requests. For local servers enable CORS. And check the server is running at all: with Ollama the tray icon shows it."
+              >
+                Адрес должен заканчиваться на /v1 (или /v1beta/openai/ у Gemini) — без него сервер не
+                отвечает на запросы чата. Для локальных серверов включите CORS. И проверьте, что сервер
+                вообще запущен: у Ollama это видно по значку в трее.
+              </p>
+            </details>
+            <details>
+              <summary data-ru="401 или 403 от облака" data-en="401 or 403 from the cloud">401 или 403 от облака</summary>
+              <p
+                data-ru="Ключ скопирован не полностью, принадлежит другому аккаунту или сервис блокирует регион. Скопируйте его заново из того кабинета, где создавали, и убедитесь, что ключ не отозван."
+                data-en="The key was copied incompletely, belongs to another account, or the service blocks your region. Copy it again from the console where you created it and make sure it was not revoked."
+              >
+                Ключ скопирован не полностью, принадлежит другому аккаунту или сервис блокирует регион.
+                Скопируйте его заново из того кабинета, где создавали, и убедитесь, что ключ не отозван.
+              </p>
+            </details>
+            <details>
+              <summary data-ru="Модель не найдена" data-en="Model not found">Модель не найдена</summary>
+              <p
+                data-ru="Имя модели должно совпадать посимвольно, вместе с префиксом: openai/gpt-oss-20b, meta/llama-3.3-70b-instruct. У Ollama это тег, который вы скачали: qwen3:8b, а не просто qwen3."
+                data-en="The model name must match character for character, prefix included: openai/gpt-oss-20b, meta/llama-3.3-70b-instruct. For Ollama it is the tag you pulled: qwen3:8b, not just qwen3."
+              >
+                Имя модели должно совпадать посимвольно, вместе с префиксом: openai/gpt-oss-20b,
+                meta/llama-3.3-70b-instruct. У Ollama это тег, который вы скачали: qwen3:8b, а не просто
+                qwen3.
+              </p>
+            </details>
+            <details>
+              <summary data-ru="Ответы обрываются на полуслове" data-en="Replies stop mid-sentence">
+                Ответы обрываются на полуслове
+              </summary>
+              <p
+                data-ru="Поднимите «Максимальную длину ответа» в «Подключении». У облачных тарифов тот же эффект бывает из-за лимита токенов в минуту — тогда помогает короткая пауза или модель поменьше."
+                data-en="Raise “Maximum reply length” in “Connection”. On cloud free tiers the same thing happens because of a tokens-per-minute cap — a short pause or a smaller model helps."
+              >
+                Поднимите «Максимальную длину ответа» в «Подключении». У облачных тарифов тот же эффект
+                бывает из-за лимита токенов в минуту — тогда помогает короткая пауза или модель поменьше.
+              </p>
+            </details>
+            <details>
+              <summary data-ru="Она молчит, хотя текст есть" data-en="She stays silent although there is text">
+                Она молчит, хотя текст есть
+              </summary>
+              <p
+                data-ru="Проверьте движок в «Голосе»: у Edge нужен интернет, у Silero — установленные голоса. Если движок выбран, но звука нет, посмотрите громкость самой реплики: у приложения своя, отдельная от системной."
+                data-en="Check the engine in “Voice”: Edge needs internet, Silero needs its voices installed. If an engine is selected but there is no sound, check the reply volume — the app has its own, separate from the system one."
+              >
+                Проверьте движок в «Голосе»: у Edge нужен интернет, у Silero — установленные голоса. Если
+                движок выбран, но звука нет, посмотрите громкость самой реплики: у приложения своя,
+                отдельная от системной.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="download">
+        <div class="wrap">
+          <div class="panel">
+            <div>
+              <h2 data-ru="Осталось скачать" data-en="One thing left">Осталось скачать</h2>
+              <p
+                data-ru="Портативная сборка для Windows: два файла, без установщика, без прав администратора и без аккаунта. Настройки и переписка остаются на этом компьютере."
+                data-en="A portable Windows build: two files, no installer, no admin rights, no account. Settings and conversations stay on this computer."
+              >
+                Портативная сборка для Windows: два файла, без установщика, без прав администратора и без
+                аккаунта. Настройки и переписка остаются на этом компьютере.
+              </p>
+            </div>
+            <div class="panel-actions">
+              <a
+                class="btn btn-solid"
+                id="zip-btn"
+                href="https://github.com/Stamir36/solenne-ai/releases/latest/download/Solenne-AI-Portable.zip"
+                target="_blank"
+                rel="noreferrer"
+                data-ru="Скачать .zip"
+                data-en="Download .zip"
+                >Скачать .zip</a
+              >
+              <a
+                class="btn btn-ghost"
+                id="releases-btn"
+                href="https://github.com/Stamir36/solenne-ai/releases"
+                target="_blank"
+                rel="noreferrer"
+                data-ru="Все релизы"
+                data-en="All releases"
+                >Все релизы</a
+              >
+              <a class="btn btn-ghost" href="index.html" data-ru="На главную" data-en="Back to the page"
+                >На главную</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap foot-inner">
+        <div class="foot-brand">
+          <a class="brand" href="index.html">
+            <img src="assets/icon.png" alt="" width="32" height="32" />
+            <span>SOLENNE<em>AI</em></span>
+          </a>
+          <p class="foot-note">
+            <span
+              data-ru="Проприетарное программное обеспечение Stamir36. Встроенные персонажи принадлежат их авторам."
+              data-en="Proprietary software by Stamir36. Bundled characters belong to their authors."
+              >Проприетарное программное обеспечение Stamir36. Встроенные персонажи принадлежат их авторам.</span
+            >
+          </p>
+        </div>
+        <nav class="foot-links">
+          <a href="https://github.com/Stamir36/solenne-ai#readme" target="_blank" rel="noreferrer">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 4.5h6a2 2 0 0 1 2 2V20a2.5 2.5 0 0 0-2.5-2.5H4z" />
+              <path d="M20 4.5h-6a2 2 0 0 0-2 2V20a2.5 2.5 0 0 1 2.5-2.5H20z" />
+            </svg>
+            <span data-ru="Документация" data-en="Documentation">Документация</span>
+          </a>
+          <a href="https://github.com/Stamir36/solenne-ai/blob/HEAD/LICENSE" target="_blank" rel="noreferrer">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3l7 2.8v5.4c0 4.2-2.8 7.5-7 9-4.2-1.5-7-4.8-7-9V5.8z" />
+              <path d="M9 11.8l2.1 2.1 4-4" />
+            </svg>
+            <span data-ru="Лицензия" data-en="License">Лицензия</span>
+          </a>
+          <a id="repo-link-2" href="https://github.com/Stamir36/solenne-ai" target="_blank" rel="noreferrer">
+            <svg class="ico ico-fill" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z" />
+            </svg>
+            <span data-ru="GitHub" data-en="GitHub">GitHub</span>
+          </a>
+          <a href="https://discord.gg/eeJQyR4sA7" target="_blank" rel="noreferrer">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L4 20l1-3.8A8.5 8.5 0 1 1 21 11.5z" />
+              <circle cx="9.2" cy="11.8" r=".9" />
+              <circle cx="14.8" cy="11.8" r=".9" />
+            </svg>
+            <span data-ru="Discord" data-en="Discord">Discord</span>
+          </a>
+          <a href="https://boosty.to/stamir36" target="_blank" rel="noreferrer">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3.5l1.7 4.3 4.3 1.7-4.3 1.7L12 15.5l-1.7-4.3L6 9.5l4.3-1.7z" />
+              <path d="M17.5 15l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z" />
+            </svg>
+            <span data-ru="Boosty" data-en="Boosty">Boosty</span>
+          </a>
+          <a href="https://www.patreon.com/c/stamir36" target="_blank" rel="noreferrer">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 20s-7-4.3-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.7-7 9-7 9z" />
+            </svg>
+            <span data-ru="Patreon" data-en="Patreon">Patreon</span>
+          </a>
+        </nav>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
